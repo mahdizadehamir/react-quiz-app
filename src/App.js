@@ -5,6 +5,7 @@ import Contact from "./pages/Contact";
 import QuestionContextProvider from "./contexts/QuestionContext";
 import { Container } from "@mui/system"; 
 import QuestionBox from "./components/QuestionBox";
+import Results from "./components/Results";
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function App() {
           <Route element={<QuestionBox />} path="/:id" />
           <Route element={<About />} path="/about" />
           <Route element={<Contact />} path="/contact" />
+          <Route element={<Results />} path="/results" />
         </Routes>
         </Container>
       </QuestionContextProvider>

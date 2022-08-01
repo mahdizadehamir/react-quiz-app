@@ -15,6 +15,8 @@ const QuestionContextProvider = (props) => {
     },
     { que: "what is the capital of france ?", ans: "paris", id: uuidv4() },
     { que: "what is the capital of germany ?", ans: "berlin", id: uuidv4() },
+    { que: "what is the capital of italy ?", ans: "rome", id: uuidv4() },
+    { que: "what is the capital of russia ?", ans: "moscow", id: uuidv4() },
   ]);
   //Selected Questions From QuestionwithAnswer
   const [questions, setQuestions] = useState([]);
@@ -32,12 +34,29 @@ const QuestionContextProvider = (props) => {
       setIsLoading(false);
     }
   };
+  const [possibleAnswers,setPossibleAnswers] = useState([]);
+  const getRandomAnswer = (questions) => {
+    let randomArr = [];
+    // for (let i = 0; i < 30; i++) {
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    randomArr.push(questions[randomIndex].ans);
+    const otheranswers = questions.filter(question => question.id !== questions[randomIndex].id)
+    randomArr = [...randomArr ,...otheranswers.map(question => question.ans)];
+    console.log(randomArr)
+    setPossibleAnswers(randomArr);
+    // if(randomArr.indexOf(questions[randomIndex].ans) === -1 ){
+    //   randomArr.push(questions[randomIndex].ans);
+    //   setPossibleAnswers(randomArr);
+    // }}
+  }
   useEffect(() => {
     chooseQuestion();
+    getRandomAnswer(questions);
     console.log(questions);
+    console.log(possibleAnswers);
   }, []);
   return (
-    <QuestionContext.Provider value={{ questions, chooseQuestion, isLoading }}>
+    <QuestionContext.Provider value={{ questions, chooseQuestion, isLoading,possibleAnswers , getRandomAnswer }}>
       {props.children}
     </QuestionContext.Provider>
   );
